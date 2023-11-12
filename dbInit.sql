@@ -18,15 +18,15 @@ closed boolean,
 foreign key (za_koga_id) references manager(manager_id) on delete cascade);
 
 insert into manager (username, email, password_hash) values
-('menadžer1', 'menadžer1@gmail.com', 'jdn934hf937bo3ubf934fvb93b4f')
-('menadžer2', 'menadžer2@gmail.com', 'jdn934hf937bo3ubf934fvb93b4f')
-('menadžer3', 'menadžer3@gmail.com', 'jdn934hf937bo3ubf934fvb93b4f')
-('menadžer4', 'menadžer4@gmail.com', 'jdn934hf937bo3ubf934fvb93b4f')
-('menadžer5', 'menadžer5@gmail.com', 'jdn934hf937bo3ubf934fvb93b4f')
-('menadžer6', 'menadžer6@gmail.com', 'jdn934hf937bo3ubf934fvb93b4f')
-('menadžer7', 'menadžer7@gmail.com', 'jdn934hf937bo3ubf934fvb93b4f')
-('menadžer8', 'menadžer8@gmail.com', 'jdn934hf937bo3ubf934fvb93b4f')
-('menadžer9', 'menadžer9@gmail.com', 'jdn934hf937bo3ubf934fvb93b4f')
+('menadžer1', 'menadžer1@gmail.com', 'jdn934hf937bo3ubf934fvb93b4f'),
+('menadžer2', 'menadžer2@gmail.com', 'jdn934hf937bo3ubf934fvb93b4f'),
+('menadžer3', 'menadžer3@gmail.com', 'jdn934hf937bo3ubf934fvb93b4f'),
+('menadžer4', 'menadžer4@gmail.com', 'jdn934hf937bo3ubf934fvb93b4f'),
+('menadžer5', 'menadžer5@gmail.com', 'jdn934hf937bo3ubf934fvb93b4f'),
+('menadžer6', 'menadžer6@gmail.com', 'jdn934hf937bo3ubf934fvb93b4f'),
+('menadžer7', 'menadžer7@gmail.com', 'jdn934hf937bo3ubf934fvb93b4f'),
+('menadžer8', 'menadžer8@gmail.com', 'jdn934hf937bo3ubf934fvb93b4f'),
+('menadžer9', 'menadžer9@gmail.com', 'jdn934hf937bo3ubf934fvb93b4f'),
 ('menadžer10', 'menadžer10@gmail.com', 'jdn934hf937bo3ubf934fvb93b4f');
 
 
@@ -41,7 +41,7 @@ manager_vidio, from_manager, time_created, time_manager_saw, closed) values
 (4, 4, 'tema1', 'poruka1', 0, 0, '2023-11-01 12:20:00', null, 0),
 (4, 4, 'tema2', 'poruka2', 1, 1, '2023-11-01 13:15:00', '2023-11-01 13:15:00', 1),
 (5, 5, 'tema2', 'poruka1', 1, 1, '2023-11-01 13:15:00', null, 1),
-(5, 5, 'tema2', 'poruka2', 1, 0, '2023-11-01 13:20:00', '2023-11-01 13:15:00', 1)
+(5, 5, 'tema2', 'poruka2', 1, 0, '2023-11-01 13:20:00', '2023-11-01 13:15:00', 1),
 (6, 6, 'tema1', 'poruka1', 0, 0, '2023-11-01 12:00:00', null, 0),
 (6, 6, 'tema1', 'poruka2', 1, 1, '2023-11-01 12:05:00', '2023-11-01 12:06:00', 0),
 (7, 7, 'tema2', 'poruka1', 1, 0, '2023-11-01 13:00:00', null, 1),
