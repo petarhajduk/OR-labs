@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manager Data</title>
+
+    <link rel="stylesheet" type="text/css" href="styles.css">
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="index.js"></script>
+</head>
+<body>
+
+    <h1>Manager Data</h1>
+
+    <form id="filterForm">
+        <label for="filterColumn">Select Column:</label>
+        <select id="filterColumn" name="filterColumn">
+            <option value="wildcard">Wildcard</option>
+            <option value="manager_id">Menadžer ID</option>
+            <option value="username">Username</option>
+            <option value="email">Email</option>
+            <option value="post_id">Upit ID</option>
+            <option value="thread_id">Dretva ID</option>
+            <option value="subjectt">Subject</option>
+            <option value="poruka">Poruka</option>
+            <option value="manager_vidio">Je li menadžer vidio</option>
+            <option value="from_manager">Je li od menadžera</option>
+            <option value="time_created">Vrijeme kreacije</option>
+            <option value="time_manager_saw">Vrijeme kada je menadžer vidio upit</option>
+            <option value="closed">Je li zatvorena dretva</option>
+        </select>
+
+        <label for="filterValue">Enter Value:</label>
+        <input type="text" id="filterValue" name="filterValue">
+
+        <button type="button" onclick="applyFilter()">Apply Filter</button>
+    </form>
+
+    <table id="managerTable">
+        <thead>
+            <tr>
+                <th>Menadžer ID</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Upit ID</th>
+                <th>Dretva ID</th>
+                <th>Subject</th>
+                <th>Poruka</th>
+                <th>Je li menadžer vidio</th>
+                <th>Je li od menadžera</th>
+                <th>Vrijeme kreacije</th>
+                <th>Vrijeme kada je menadžer vidio upit</th>
+                <th>Je li zatvorena dretva</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <div id="downloadSection">
+        <button type="button" onclick="downloadDataAsCSV()">Download as CSV</button>
+        <button type="button" onclick="downloadDataAsJSON()">Download as JSON</button>
+    </div>
+</body>
+</html>
