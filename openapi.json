@@ -1,0 +1,194 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "Your API Title",
+      "version": "1.0.0"
+    },
+    "paths": {
+      "/api/managers": {
+        "get": {
+          "summary": "Get managers and their posts",
+          "parameters": [
+            {
+              "name": "columnName",
+              "in": "query",
+              "description": "The name of the column to filter by (e.g., manager_id, username, email)",
+              "required": false,
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "value",
+              "in": "query",
+              "description": "The value to filter by",
+              "required": false,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "manager_id": { "type": "integer" },
+                        "username": { "type": "string" },
+                        "email": { "type": "string" },
+                        "password_hash": { "type": "string" },
+                        "post_id": { "type": "integer" },
+                        "thread_id": { "type": "integer" },
+                        "subjectt": { "type": "string" },
+                        "poruka": { "type": "string" },
+                        "manager_vidio": { "type": "boolean" },
+                        "from_manager": { "type": "boolean" },
+                        "time_created": { "type": "string" },
+                        "time_manager_saw": { "type": "string" },
+                        "closed": { "type": "boolean" }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/api/manager/{managerId}": {
+        "parameters": [
+          {
+            "name": "managerId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "get": {
+          "summary": "Get a single manager by ID",
+          "responses": {
+            "200": {
+              "description": "Successful response"
+            },
+            "404": {
+              "description": "Manager not found"
+            }
+          }
+        },
+        "put": {
+          "summary": "Update a manager by ID",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "email": { "type": "string" },
+                    "password": { "type": "string" }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Manager updated successfully"
+            },
+            "400": {
+              "description": "Bad Request - Email is already in use by another manager"
+            },
+            "404": {
+              "description": "Manager not found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/api/posts/thread/{threadId}": {
+        "parameters": [
+          {
+            "name": "threadId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "get": {
+          "summary": "Get posts in a thread by thread ID",
+          "responses": {
+            "200": {
+              "description": "Successful response"
+            },
+            "404": {
+              "description": "Thread not found"
+            }
+          }
+        },
+        "delete": {
+          "summary": "Delete posts in a thread by thread ID",
+          "responses": {
+            "200": {
+              "description": "Posts in the thread deleted successfully"
+            },
+            "404": {
+              "description": "Thread not found"
+            }
+          }
+        }
+      },
+      "/api/posts": {
+        "post": {
+          "summary": "Add a new post",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "thread_id": { "type": "integer" },
+                    "za_koga_id": { "type": "integer" },
+                    "subjectt": { "type": "string" },
+                    "poruka": { "type": "string" },
+                    "from_manager": { "type": "boolean" }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Post added successfully",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "message": { "type": "string" },
+                      "postId": { "type": "integer" }
+                    }
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      }
+    }
+  }

@@ -55,14 +55,14 @@ function applyFilter() {
         console.log('originalData', originalData)
         filteredData = originalData.filter(manager =>
             Object.values(manager).some(value =>
-                value?.toString().toLowerCase() === filterValue.toLowerCase()
+                value?.toString().toLowerCase().includes(filterValue.toLowerCase())
             )
         );
 
         displayData(filteredData);
     } else {
         filteredData = originalData.filter(manager =>
-            manager[filterColumn]?.toString().toLowerCase() === filterValue.toLowerCase()
+            manager[filterColumn]?.toString().toLowerCase().includes(filterValue.toLowerCase())
         );
 
         displayData(filteredData);
