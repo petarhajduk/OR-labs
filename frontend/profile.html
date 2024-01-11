@@ -1,0 +1,38 @@
+<!-- profile.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+</head>
+<body>
+    <h1>User Profile</h1>
+    
+    <script>
+        // Function to fetch user data
+        function fetchUserData() {
+            // Fetch user profile data as text
+            fetch('http://localhost:5500/userInfo.txt')
+                .then(response => response.text())
+                .then(userDataString => {
+                    try {
+                        // Parse the JSON-formatted string into an object
+                        const userDataObject = JSON.parse(userDataString);
+
+                        // Display user data in the subwindow
+                        const userDataContainer = document.createElement('pre');
+                        userDataContainer.textContent = JSON.stringify(userDataObject, null, 2);
+                        document.body.appendChild(userDataContainer);
+                    } catch (parseError) {
+                        console.error('Error parsing user profile data:', parseError);
+                    }
+                })
+                .catch(error => console.error('Error fetching user profile:', error));
+        }
+
+        // Call the fetchUserData function when the page loads
+        document.addEventListener('DOMContentLoaded', fetchUserData);
+    </script>
+</body>
+</html>

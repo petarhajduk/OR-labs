@@ -1,3 +1,6 @@
+const { auth } = require('express-openid-connect');
+const { requiresAuth } = require('express-openid-connect');
+const fs = require('fs');
 const express = require('express');
 const sqlite3 = require('sqlite3');
 const bcrypt = require('bcrypt');
@@ -9,6 +12,82 @@ const db = new sqlite3.Database('../pitajMgmt.db');
 
 app.use(cors({ origin: '*' }));
 app.use(express.json());
+
+const config = {
+    authRequired: false,
+    auth0Logout: true,
+    secret: 'p3IYWVqzPgDNwpgZFtFKKIWrkA9dX0H-pvmdCiHey__qnldkIJAgW6jD04QFcAcY',
+    baseURL: 'http://localhost:3000',
+    clientID: 'CYHkXEWZz5Ssx0mk572uX6Cxh7AFvafr',
+    issuerBaseURL: 'https://dev-mi8srd6syolya54r.us.auth0.com'
+};
+
+// auth router attaches /login, /logout, and /callback routes to the baseURL
+app.use(auth(config));
+
+// req.isAuthenticated is provided from the auth router
+app.get('/', (req, res) => {
+    console.log('root route reached');
+
+    const filePath = '../loginInfo.txt';
+    const filePath1 = '../userInfo.txt';
+
+    if (req.oidc.isAuthenticated()) {
+        fs.writeFile(filePath, '1', (err) => {
+            if (err) {
+                console.error('Error writing to file:', err);
+            } else {
+                console.log('Authentication successful. Wrote "1" to the file.');
+            }
+        });
+
+        fs.writeFile(filePath1, JSON.stringify(req.oidc.user), (err) => {
+            if (err) {
+                console.error('Error writing to file:', err);
+            } else {
+                console.log('Authentication successful. Wrote user info to the file.');
+            }
+        });
+
+        res.redirect('http://localhost:5500/frontend/index.html');
+    } else {
+        fs.writeFile(filePath, '0', (err) => {
+            if (err) {
+                console.error('Error writing to file:', err);
+            } else {
+                console.log('Authentication failed. Wrote "0" to the file.');
+            }
+        });
+
+        fs.writeFile(filePath1, '', (err) => {
+            if (err) {
+                console.error('Error writing to file:', err);
+            } else {
+                console.log('Authentication successful. Wrote "1" to the file.');
+            }
+        });
+
+        res.redirect('http://localhost:5500/frontend/index.html');
+    }
+    // res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
+});
+
+app.get('/profile', requiresAuth(), (req, res) => {
+    res.send(JSON.stringify(req.oidc.user));
+});
+
+app.get('/authcallback', (req, res) => {
+    res.cookie('authToken', 'loginSuccessful', { httpOnly: true });
+    console.log('AuthCallback route reached');
+    if (req.oidc.isAuthenticated()) {
+        // Set the authentication cookie upon successful login
+        res.cookie('authToken', 'loginSuccessful', { httpOnly: true });
+        // Send a success response to the frontend
+        res.json({ success: true, message: 'Authentication successful' });
+    } else {
+        res.status(401).json({ success: false, message: 'Authentication failed' });
+    }
+});
 
 app.get('/api/managers', (req, res) => {
     const { columnName, value } = req.query;

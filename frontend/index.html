@@ -31,6 +31,52 @@
                     link.click();
                 });
         }
+
+        function login() {
+            window.location.href = 'http://localhost:3000/login';
+        }
+
+        function logout() {
+            window.location.href = 'http://localhost:3000/logout';
+        }
+
+        function refreshFiles() {
+            // Fetch files and download them
+            downloadCSV();
+            downloadJSON();
+        }
+
+        function viewProfile() {
+            window.location.href = 'http://localhost:5500/frontend/profile.html';
+        }
+
+        function checkLoginStatus() {
+            const loginButton = document.getElementById('loginButton');
+            const logoutButton = document.getElementById('logoutButton');
+            const refreshFilesButton = document.getElementById('refreshFilesButton');
+            const viewProfileButton = document.getElementById('viewProfileButton');
+
+            fetch('http://localhost:5500/loginInfo.txt')
+                .then(response => response.text())
+                .then(data => {
+                    const isLoggedIn = data.trim() === '1';
+
+                    if (isLoggedIn) {
+                        loginButton.style.display = 'none';
+                        logoutButton.style.display = 'block';
+                        refreshFilesButton.style.display = 'block';
+                        viewProfileButton.style.display = 'block';
+                    } else {
+                        loginButton.style.display = 'block';
+                        logoutButton.style.display = 'none';
+                        refreshFilesButton.style.display = 'none';
+                        viewProfileButton.style.display = 'none';
+                    }
+                })
+                .catch(error => console.error('Error reading loginInfo.txt:', error));
+        }
+        
+        document.addEventListener('DOMContentLoaded', checkLoginStatus);
     </script>
 </head>
 <body>
@@ -43,5 +89,11 @@
 
     <button onclick="downloadCSV()">Download CSV</button>
     <button onclick="downloadJSON()">Download JSON</button>
+
+    <button id="loginButton" onclick="login()">Login</button>
+    <button id="logoutButton" onclick="logout()" style="display: none;">Logout</button>
+    <button id="refreshFilesButton" onclick="refreshFiles()" style="display: none;">Refresh Files</button>
+    <button id="viewProfileButton" onclick="viewProfile()" style="display: none;">View Profile</button>
+
 </body>
 </html>
