@@ -69,7 +69,6 @@ app.get('/', (req, res) => {
 
         res.redirect('http://localhost:5500/frontend/index.html');
     }
-    // res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
 });
 
 app.get('/profile', requiresAuth(), (req, res) => {
@@ -80,9 +79,7 @@ app.get('/authcallback', (req, res) => {
     res.cookie('authToken', 'loginSuccessful', { httpOnly: true });
     console.log('AuthCallback route reached');
     if (req.oidc.isAuthenticated()) {
-        // Set the authentication cookie upon successful login
         res.cookie('authToken', 'loginSuccessful', { httpOnly: true });
-        // Send a success response to the frontend
         res.json({ success: true, message: 'Authentication successful' });
     } else {
         res.status(401).json({ success: false, message: 'Authentication failed' });
